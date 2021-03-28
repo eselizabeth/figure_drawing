@@ -1,0 +1,206 @@
+#:import datetime datetime.datetime
+#:set currentTime datetime.now().strftime("%H:%M")
+
+
+<CustomPopup>
+	id: popup
+	title: 'Information'
+	auto_dismiss: False
+	size: (300, 200)
+	size_hint: (None, None)
+	separator_color: (0/255, 102/255, 102/255, 1)
+	BoxLayout:
+		orientation: 'vertical'
+
+		Label:
+			text: 'Session is sucesfully finished!'
+			font_size: 20
+			
+
+		Button:
+			text: 'Go back to main screen'
+			font_size: 24
+			italic: True
+			background_normal: ''
+			background_color: (0/255, 102/255, 102/255, 1)
+			on_press: root.dismiss() 
+			on_release: app.root.current = 'first'
+
+
+<FirstWindow>
+	name: 'first'
+	canvas.before:
+		Color:		
+			rgba: (60/255, 60/255, 60/255, 0.4)
+		Rectangle:
+			pos: self.pos
+			size: self.size
+
+	BoxLayout:
+		orientation: 'vertical'
+		padding: 40
+		spacing: 20
+		size: root.width, root.height
+		
+		Button:
+			text: "Select a folder"
+			font_size: 25
+			size: (300, 50)
+			size_hint: (None, None)
+			pos_hint: {'center_x': 0.5}
+			background_normal: ''
+			background_color: (0/255, 102/255, 102/255, 1)
+			on_press: root.selectFolder()
+
+		Label:
+			id: folderName
+			italic: True
+			text: ''
+
+		Label:
+			markup: True
+			text: 'Time per drawing [i](in seconds)[/i]'
+			font_size: 25
+			color: (0, 102/255, 102/255, 1)
+			size: (500, 30)
+			size_hint: (None, None)
+			pos_hint: {'center_x': 0.5}
+			background_color: (255/255, 204/255, 102/255, 1)
+			canvas.before:
+				Color:
+					rgba: self.background_color
+				Rectangle:
+					size: self.size
+					pos: self.pos	
+		Slider:
+			id: slider1
+			min: 0
+			max: 300
+			step: 1
+			width: 400
+			size_hint: (None, None)
+			pos_hint: {'center_x': 0.5}
+			on_touch_up: root.update()
+
+		Label:
+			bold: True
+			text: str(int(slider1.value))
+	
+		Label: 
+			text: "Number of drawings"
+			font_size: 25
+			color: (0, 102/255, 102/255, 1)
+			size: (500, 30)
+			size_hint: (None, None)
+			pos_hint: {'center_x': 0.5}
+			background_color: (255/255, 204/255, 102/255, 1)
+			canvas.before:
+				Color:
+					rgba: self.background_color
+				Rectangle:
+					size: self.size
+					pos: self.pos
+
+		Slider:
+			id: slider2
+			min: 0
+			max: 100
+			step: 1
+			width: 400
+			size_hint: (None, None)
+			pos_hint: {'center_x': 0.5}
+			on_touch_up: root.update()
+
+		Label:
+			bold: True
+			text: str(int(slider2.value))
+
+		GridLayout:
+			padding: 10
+			spacing: 30
+			cols: 2
+
+			Label:
+				id: current
+				text: currentTime
+				font_size: 32
+				color: (0, 102/255, 204/255, 1)
+				
+			Label:
+				id: finish
+				text: currentTime
+				font_size: 32
+				color: (204/255, 51/255, 0, 1)
+				
+			Label:
+				text: ' Current time'
+				
+			Label:
+				text: ' Finish time' 
+				
+		Button:
+			id: letsdraw
+			text: "Lets draw!"
+			font_size: 20
+			size: (200, 50)
+			size_hint: (None, None)
+			pos_hint: {'center_x': 0.5}
+			disabled: True
+			background_normal: ''
+			background_color: (0/255, 102/255, 102/255, 1)
+			on_press: app.root.current = "second"
+
+	
+
+<SecondWindow>
+	name: 'second'
+	FloatLayout:
+		size: root.width, root.height
+
+		Image:
+			id: img
+			source: ''
+			keep_ratio: True
+
+		Label: 
+			id: timer
+			text: ''
+			font_size: 45
+			size: (50, 50)
+			size_hint: (None, None)
+			pos_hint: {'center_x': 0.50, 'center_y': 0.9}
+			background_color: (60/255, 60/255, 60/255, 0.4)
+			canvas.before:
+				Color:
+					rgba: self.background_color
+				Rectangle:
+					size: self.size
+					pos: self.pos
+		Button:
+			text: ">"
+			size: (50, 50)
+			size_hint: (None, None)
+			pos_hint: {'center_x': 0.58, 'center_y': 0.1}
+			background_normal: ''
+			background_color: (60/255, 60/255, 60/255, 0.7)
+			on_press: root.change(1)
+
+		Button:
+			id: stop
+			text: "||"
+			size: (50, 50)
+			size_hint: (None, None)
+			pos_hint: {'center_x': 0.50, 'center_y': 0.1}
+			background_normal: ''
+			background_color: (60/255, 60/255, 60/255, 0.7)
+			on_press: root.manageTime()
+
+		Button:
+			text: "<"
+			size: (50, 50)
+			size_hint: (None, None)
+			pos_hint: {'center_x': 0.42, 'center_y': 0.1}
+			background_normal: ''
+			background_color: (60/255, 60/255, 60/255, 0.7)
+			on_press: root.change(-1)
+
