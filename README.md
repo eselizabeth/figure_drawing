@@ -22,8 +22,7 @@ pip install Kivy ==2.0.0
 pip install plyer==2.0.0
 ```
 
-3. Run
-python ``` main.py ```
+3. Run: python ``` main.py ```
 
 
 
