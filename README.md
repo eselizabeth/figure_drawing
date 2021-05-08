@@ -11,7 +11,7 @@ Figure drawing is a helpful tool for people who want to get improve their drawin
 1. Clone GitHub repository
 
 ```
-git clone https://github.com/daytac/figure-drawing.git
+git clone https://github.com/dee-Aytac/figure-drawing.git
 ```
 
 2. Install dependencies 
